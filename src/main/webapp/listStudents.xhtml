@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>#{msgs['title']}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+
+<h:form class="container">
+
+    <h2 class="text-center my-4">#{msgs['title']}</h2>
+    <div class="bg-success text-white" >
+        <h:outputText value="#{studentBean.studentService.message}" />
+    </div>
+    <div class="">
+
+        <h:dataTable value="#{studentBean.students}" var="student" styleClass="table table-bordered table-striped table-fixed">
+            <h:column>
+                <f:facet name="header">#{msgs['id']}</f:facet>
+                #{student.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs['nom']}</f:facet>
+                <h:inputText value="#{student.nom}" rendered="#{studentBean.isEditing(student.id)}"/>
+                <h:outputText value="#{student.nom}" rendered="#{! studentBean.isEditing(student.id)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs['prenom']}</f:facet>
+                <h:inputText value="#{student.prenom}" rendered="#{studentBean.isEditing(student.id)}"/>
+                <h:outputText value="#{student.prenom}" rendered="#{! studentBean.isEditing(student.id)}"/>            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs['age']}</f:facet>
+                <h:inputText id="age" value="#{student.age}" rendered="#{studentBean.isEditing(student.id)}" validator="ageValidator"/>
+                <h:outputText value="#{student.age}" rendered="#{! studentBean.isEditing(student.id)}"/>
+                <h:message for="age" style="color: red;"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs['email']}</f:facet>
+                <h:inputText id="email" value="#{student.email}" rendered="#{studentBean.isEditing(student.id)}" validator="emailValidator"/>
+                <h:outputText value="#{student.email}" rendered="#{! studentBean.isEditing(student.id)}"/>
+                <h:message for="email" style="color: red;"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs['action']}</f:facet>
+                <h:commandButton value="#{msgs['modifier']}" styleClass="btn btn-primary" action="#{studentBean.startEditing(student.id)}" rendered="#{not studentBean.isEditing(student.id)}"/>
+                <h:commandButton value="#{msgs['save']}" styleClass="btn btn-success" action="#{studentBean.editStudent(student)}" rendered="#{studentBean.isEditing(student.id)}"/>
+                <h:commandButton value="#{msgs['supprimer']}" styleClass="btn btn-danger" action="#{studentBean.studentService.delete(student.id)}" rendered="#{not studentBean.isEditing(student.id)}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <h:commandButton value="#{msgs['ajouter']}" styleClass="btn btn-success me-md-2" action="add.xhtml"/>
+    </div>
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+            <h:outputLabel value="#{msgs['langue']} :" />
+            <h:selectOneMenu value="#{languageBean.selectedLocale}" styleClass="form-select">
+                <f:selectItem itemValue="fr" itemLabel="Français" />
+                <f:selectItem itemValue="en" itemLabel="English" />
+                <f:ajax render="@form" />
+            </h:selectOneMenu>
+            <h:commandButton value="#{msgs['changeLangue']}" action="#{languageBean.changeLocale}" styleClass="btn btn-success" />
+        </div>
+    </div>
+
+    <nav aria-label="Pagination" class="mt-4 justify-content-center" >
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <h:commandButton value="#{msgs['precedent']}" action="#{studentBean.previousPage}" styleClass="btn btn-primary" rendered="#{studentBean.currentPage > 1}" />
+            <h:outputLabel value="Page #{studentBean.currentPage}" style="margin-top: 6px; margin-bottom: 0;" />
+            <h:commandButton value="#{msgs['suivant']}" action="#{studentBean.nextPage}" styleClass="btn btn-primary" rendered="#{studentBean.currentPage lt studentBean.getTotalPages()}" />
+        </div>
+    </nav>
+
+
+
+
+</h:form>
+
+</body>
+
+</html>
