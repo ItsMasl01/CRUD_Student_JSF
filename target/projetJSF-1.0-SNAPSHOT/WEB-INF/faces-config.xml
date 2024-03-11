@@ -4,11 +4,11 @@
               xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                                   https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd">
 
-    <managed-bean>
-        <managed-bean-name>studentBean</managed-bean-name>
-        <managed-bean-class>com.exemple.Bean.StudentBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+<!--    <managed-bean>-->
+<!--        <managed-bean-name>studentBean</managed-bean-name>-->
+<!--        <managed-bean-class>com.exemple.Bean.StudentBean</managed-bean-class>-->
+<!--        <managed-bean-scope>session</managed-bean-scope>-->
+<!--    </managed-bean>-->
 
     <application>
         <resource-bundle>

@@ -5,13 +5,14 @@ import com.exemple.Model.Student;
 import com.exemple.Service.StudentService;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.bean.ViewScoped;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class StudentBean {
 
 
