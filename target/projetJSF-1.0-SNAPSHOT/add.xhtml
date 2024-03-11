@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ajouter étudiant</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.css"/>
+</head>
+<body>
+<div class="container">
+    <h4 class="mt-4 mb-4">#{msgs['ajouter']}</h4>
+    <div class="bg-success text-white" >
+        <h:outputText value="#{studentBean.studentService.message}" />
+    </div>
+    <h:form>
+        <div class="mb-3">
+            <label for="prenom" class="form-label">#{msgs['prenom']}</label>
+            <h:inputText id="prenom" value="#{studentBean.student.prenom}" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="nom" class="form-label">#{msgs['nom']}</label>
+            <h:inputText id="nom" value="#{studentBean.student.nom}" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">#{msgs['email']}</label>
+            <h:inputText id="email" value="#{studentBean.student.email}" class="form-control" required="true" validator="emailValidator"/>
+            <h:message for="email" style="color: red;"/>
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">#{msgs['age']}</label>
+            <h:inputText id="age" value="#{studentBean.student.age}" class="form-control" validator="ageValidator" />
+            <h:message for="age" style="color: red;"/>
+        </div>
+        <h:commandButton value="#{msgs['confirmer']}" class="btn btn-success mb-4" action="#{studentBean.studentService.insert(studentBean.student)}" />
+    </h:form>
+    <h:form>
+        <h:commandButton value="#{msgs['title']}" styleClass="btn btn-success mb-4" action="listStudents.xhtml"/>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h:outputLabel value="#{msgs['langue']} :" />
+                <h:selectOneMenu value="#{languageBean.selectedLocale}" styleClass="form-select">
+                    <f:selectItem itemValue="fr" itemLabel="Français" />
+                    <f:selectItem itemValue="en" itemLabel="English" />
+                    <f:ajax render="@form" />
+                </h:selectOneMenu>
+                <h:commandButton value="#{msgs['changeLangue']}" action="#{languageBean.changeLocale}" styleClass="btn btn-success" />
+            </div>
+        </div></h:form>
+</div>
+</body>
+</html>
